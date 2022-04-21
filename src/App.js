@@ -29,15 +29,31 @@ const comment = [
 ];
 
 
+function proverComment(num, arr) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].id == num) {
+      return false;
+    }
+  }
+  return true;
+}
+
 
 function App() {
   return (
     <div className='App'>
       {
-        comment.map(elem=>{
-          let commentsKey = Math.random();
-          elem.id = commentsKey; 
-          return <Comment comment={elem} key={elem.id} />    
+        comment.map((elem, index, arr) => {
+          let key = Math.floor(Math.random() * (arr.length + 10) + 1);
+          if (proverComment(key, arr)) {
+            elem.id = key;
+          } else {
+            while (!proverComment(key, arr)) {
+              key = Math.floor(Math.random() * (arr.length + 10) + 1);
+            }
+            elem.id = key;
+          }
+          return <Comment comment={elem} key={elem.id} />
         })
       }
     </div>
